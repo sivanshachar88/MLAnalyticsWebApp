@@ -1,4 +1,48 @@
 var digestRequest = require('request-digest')('admin', 'admin');
+var xqueries = require('./xqueries.js');
+
+
+var query = 'xquery=' + xqueries.stateQuery;
+
+function submitRequest(queryName, bodyXML) {
+
+	digestRequest.requestAsync({
+	  host: 'http://localhost',
+	  path: '/v1/eval',
+	  port: 8011,
+	  method: 'POST',
+	  json: false,
+	  body: bodyXML,
+	  headers: {
+	        'Accept': 'multipart/mixed',
+	        'Content-Type': 'application/x-www-form-urlencoded'
+	  }
+	})
+	.then(function (response) {
+		console.log("Response Below:");
+		parseResponse(queryName, response);
+	})
+	.catch(function (error) {
+	  console.log('error');
+	  console.log(error);
+	});
+}
+
+function parseResponse(queryName, res){
+	if (queryName == null) {
+		console.log("null!");
+	}
+	else if (queryName == "hello") {
+		console.log("hello");
+		console.log(res.body);
+	}
+	else {
+		console.log("damn!");
+	}
+}
+
+submitRequest("hello", query);
+
 
 //https://github.com/bnjjj/node-request-digest
 
@@ -53,111 +97,8 @@ digestRequest.requestAsync({
   console.log(error);
 });
 */
-var stateQuery = 
-`xquery version "1.0-ml";
 
-declare namespace p="http://persistence.ffe.cms.hhs.gov";
-declare namespace base="http://base.persistence.base.cms.hhs.gov";
-declare namespace pb = "http://persistence.base.cms.hhs.gov";
 
-let $_ := xdmp:set-request-time-limit(60)
-
-let $states := (
-"AL",
-"AK",
-"AZ",
-"AR",
-"CA",
-"CO",
-"CT",
-"DE",
-"FL",
-"GA",
-"HI",
-"ID",
-"IL",
-"IN",
-"IA",
-"KS",
-"KY",
-"LA",
-"ME",
-"MD",
-"MA",
-"MI",
-"MN",
-"MS",
-"MO",
-"MT",
-"NE",
-"NV",
-"NH",
-"NJ",
-"NM",
-"NY",
-"NC",
-"ND",
-"OH",
-"OK",
-"OR",
-"PA",
-"RI",
-"SC",
-"SD",
-"TN",
-"TX",
-"UT",
-"VT",
-"VA",
-"WA",
-"WV",
-"WI",
-"WY")
-
-for $state in $states
-  let $uri := fn:concat("/", $state, "/gov/ffe/InsuranceApplication/")
-  return fn:concat($state, ":", fn:count(xdmp:directory($uri, "1")))`;
-
-var query = 'xquery=' + stateQuery;
-
-function submitRequest(queryName, bodyXML) {
-
-	digestRequest.requestAsync({
-	  host: 'http://localhost',
-	  path: '/v1/eval',
-	  port: 8011,
-	  method: 'POST',
-	  json: false,
-	  body: bodyXML,
-	  headers: {
-	        'Accept': 'multipart/mixed',
-	        'Content-Type': 'application/x-www-form-urlencoded'
-	  }
-	})
-	.then(function (response) {
-		console.log("Response Below:");
-		parseResponse(queryName, response);
-	})
-	.catch(function (error) {
-	  console.log('error');
-	  console.log(error);
-	});
-}
-
-function parseResponse(queryName, res){
-	if (queryName == null) {
-		console.log("null!");
-	}
-	else if (queryName == "hello") {
-		console.log("hello");
-		console.log(res.body);
-	}
-	else {
-		console.log("damn!");
-	}
-}
-
-submitRequest("hello", query);
 
 
 /*
