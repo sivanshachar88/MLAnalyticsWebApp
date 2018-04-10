@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Digest auth tester</title>
+
+    <script type="text/javascript" src="C:\Users\sivan.shachar\Documents\OneDrive - Accenture Federal Services\CMS\request-digest-test\node_modules\crypto-js\crypto-js.js"></script>
+    <script type="text/javascript" src="C:\Users\sivan.shachar\Documents\OneDrive - Accenture Federal Services\CMS\request-digest-test\node_modules\digest-auth-request\digestAuthRequest.js"></script>
+
+
+</head>
+<body>
+<h1>DigestAuthRequest.js test</h1>
+<p id="result">Showing Data Below...</p>
+<div id="data">check getting into function</div>
+<div id="data111">check creating request object (get properties)</div>
+<div id="data112"><b>check req scheme:</b></div>
+<div id="data113"><b>check req nonce:</b></div>
+<div id="data114"><b>check req realm:</b></div>
+<div id="data115"><b>check req qop:</b></div>
+<div id="data116"><b>check req response:</b></div>
+<div id="data117"><b>check req opaque:</b></div>
+<div id="data118"><b>check req nc:</b></div>
+<div id="data119"><b>check req cnonce:</b></div>
+<div id="data120"><b>check req timeout:</b></div>
+<div id="data121"><b>check req loggingOn:</b></div>
+<div id="data122"><b>check req post:</b></div>
+<div id="data123"><b>check req request:</b></div>
+<div id="data124"><b>check req makeUnauthenticatedRequest:</b></div>
+<div id="data125"><b>check req makeAuthenticatedRequest:</b></div>
+<div id="data126"><b>check req formulateResponse:</b></div>
+<div id="data127"><b>check req generateCnonce:</b></div>
+<div id="data128"><b>check req abort:</b></div>
+<div id="data129"><b>check req isJson:</b></div>
+<div id="data130"><b>check req log:</b></div>
+<div id="data131"><b>check req version:</b></div>
+<div id="data3">output1 for response</div>
+<div id="data4">output1 for error</div>
+<div id="data5">output2 for error</div>
+
+<input type="button" onclick="testFunction()" value="Click">
+
+</body>
+<script type="text/javascript">
+  function testFunction() {
+
+    document.getElementById('data').innerHTML = 'In Function!';
+    // digest auth request
+    var url = 'http://localhost:8011/v1/search?format=xml';
+
+    var req = new digestAuthRequest('GET', url, 'admin', 'admin');
+//scheme,nonce,realm,qop,response,opaque,nc,cnonce,timeout,loggingOn,post,request,makeUnauthenticatedRequest,makeAuthenticatedRequest,formulateResponse,generateCnonce,abort,isJson,log,version
+
+    document.getElementById('data111').innerHTML = Object.keys(req);
+    document.getElementById('data112').innerHTML += req.scheme;
+    document.getElementById('data113').innerHTML += req.nonce;
+    document.getElementById('data114').innerHTML += req.realm;
+    document.getElementById('data115').innerHTML += req.qop;
+    document.getElementById('data116').innerHTML += req.response;
+    document.getElementById('data117').innerHTML += req.opaque;
+    document.getElementById('data118').innerHTML += req.nc;
+    document.getElementById('data119').innerHTML += req.cnonce;
+    document.getElementById('data120').innerHTML += req.timeout;
+    document.getElementById('data121').innerHTML += req.loggingOn;
+    document.getElementById('data122').innerHTML += req.post;
+    document.getElementById('data123').innerHTML += req.request;
+    document.getElementById('data124').innerHTML += req.makeUnauthenticatedRequest;
+    document.getElementById('data125').innerHTML += req.makeAuthenticatedRequest;
+    document.getElementById('data126').innerHTML += req.formulateResponse;
+    document.getElementById('data127').innerHTML += req.generateCnonce;
+    document.getElementById('data128').innerHTML += req.abort;
+    document.getElementById('data129').innerHTML += req.isJson;
+    document.getElementById('data130').innerHTML += req.log;
+    document.getElementById('data131').innerHTML += req.version;
+
+
+    // make the request
+    req.request(function(data) { 
+      console.log("abc");
+      document.getElementById("data3").innerHTML = data;
+
+      // success callback
+      // data probably a success message
+    },function(errorCode) { 
+      console.log("error");
+
+      document.getElementById("data4").innerHTML = errorCode;
+      // error callback
+      // tell user request failed
+    });
+
+  }
+</script>
+
+
+<!--
+  var i = 0;
+var x;
+displayCD(i);
+
+function displayCD(i) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myFunction(this, i);
+        }
+    };
+    xmlhttp.open("GET", "cd_catalog.xml", true);
+    xmlhttp.send();
+}
+
+function myFunction(xml, i) {
+    var xmlDoc = xml.responseXML; 
+    x = xmlDoc.getElementsByTagName("CD");
+    document.getElementById("showCD").innerHTML =
+    "Artist: " +
+    x[i].getElementsByTagName("ARTIST")[0].childNodes[0].nodeValue +
+    "<br>Title: " +
+    x[i].getElementsByTagName("TITLE")[0].childNodes[0].nodeValue +
+    "<br>Year: " + 
+    x[i].getElementsByTagName("YEAR")[0].childNodes[0].nodeValue;
+}
+
+function next() {
+if (i < x.length-1) {
+  i++;
+  displayCD(i);
+  }
+}
+
+function previous() {
+if (i > 0) {
+  i--;
+  displayCD(i);
+  }
+}
+  -->
