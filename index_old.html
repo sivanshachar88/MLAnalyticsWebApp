@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+<script type="text/javascript">
+	var httpClient = function()
+	{
+		this.get = function(url, callback){
+		alert("function");
+	    var xhr = new XMLHttpRequest();
+	    alert(xhr);
+	    xhr.onreadystatechange = function() {
+	    	if (xhr.readyState == 4 && xhr.status == 200){
+	    		callback(xhr.responseText);
+	    	}
+	    	else{
+	    		alert("wtf. readyState:" + xhr.readyState + " - status:" + xhr.status);
+	    	}
+	    }
+
+	    xhr.open("GET", url, true);
+	    xhr.send();
+		}
+	}
+
+	function buttonFunction(){
+		alert("hello");
+		var client = new httpClient();
+		alert(client);
+		client.get('http://google.com', function(response){
+			document.getElementById('cnt').innerHTML = response;
+			alert(response);
+		});
+
+	}
+</script>
+<head>
+	<title>Data Dashboard</title>
+</head>
+<body>
+	<h1>CMS Data Dashboard</h1>
+	<p>The number of clicks is: <span id='cnt'>0</span></p>
+	<p><span></span></p>
+ 	<button type="button" onclick="buttonFunction()">Click!</button>
+
+<!-- 	<form method="POST" action="/users/add">
+		<label>First Name</label><br>
+		<input type="text" name="first_name">
+		<br>
+		<label>Last Name</label><br>
+		<input type="text" name="last_name">
+		<br>
+		<label>Email</label><br>
+		<input type="text" name="email">
+		<br><br>
+		<input type="submit" value="Submit">	
+	</form>
+ -->
+</body>
+</html>

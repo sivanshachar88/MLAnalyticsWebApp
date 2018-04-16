@@ -1,59 +1,228 @@
 <!DOCTYPE html>
-<html>
-<script type="text/javascript" src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-<script type="text/javascript">
-	var httpClient = function()
-	{
-		this.get = function(url, callback){
-		alert("function");
-	    var xhr = new XMLHttpRequest();
-	    alert(xhr);
-	    xhr.onreadystatechange = function() {
-	    	if (xhr.readyState == 4 && xhr.status == 200){
-	    		callback(xhr.responseText);
-	    	}
-	    	else{
-	    		alert("wtf. readyState:" + xhr.readyState + " - status:" + xhr.status);
-	    	}
-	    }
-
-	    xhr.open("GET", url, true);
-	    xhr.send();
+<meta charset="utf-8">
+<style>
+	.state{
+		fill: none;
+		stroke: #a9a9a9;
+		stroke-width: 1;
+	}
+	.state:hover{
+		fill-opacity:0.5;
+	}
+	.pageContainer{
+		min-height: 100%;
+		min-width: 100%;
+		width: 100%;
+		position: relative;
+	}
+	.topBar{
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 9%;
+		width: 100%;
+		z-index: +10;
 		}
+	.topBar #logo{
+		position: absolute;
+		display: block;
+		left: 0;
+		width: 20%;
+		height: 100%;
+   		border-bottom: solid;
+		border-color: black;
+		border-width: 1.5px;			
+	}
+	.topBar #banner{
+		position: absolute;
+		display: block;
+		right: 0;
+		width: 80%;
+		height: 100%;
+   		border-bottom: solid;
+		border-color: black;
+		border-width: 1.5px;			
+	}
+	.topBar #title{
+		position: absolute;
+		bottom: 0;
+		left: 21%;
+		height: 80%;
+		border-bottom: none;
+	}
+	.topBar a{
+		position: relative;
+		top: 0;
+		right: 0;
+		margin-top: 1%;
+		display:block;
+		float: right;
+		width: 7%;	
+		text-align: center;
+		padding: 1%;
+		background-color: #FFD004;
+		border: solid;
+		border-color: black;
+		border-width: 1px;
+	}
+	.topBar a:hover{
+		background-color: #FFD00A;
+	}
+	.topBar a:active{
+		background-color: #E67E22;
+		color: purple;
+	}
+	.topBar #defaultOpen{
+		background-color: #E67E22;
+	}
+	.pageBody{
+		position: relative;
+		height: 89.5%;
+		width: 100%;
+		margin-top: 5%;
+		margin-bottom: 0%;
+		/*border: solid black 1px;*/
+	}
+	.pageBody #dataContainer{
+		position: absolute;
+		margin-top: 1%;
+		width: 30%;
+		height: 95%;
+		border: solid;
+		border-width: 2px;
+		border-color: black;
 	}
 
-	function buttonFunction(){
-		alert("hello");
-		var client = new httpClient();
-		alert(client);
-		client.get('http://google.com', function(response){
-			document.getElementById('cnt').innerHTML = response;
-			alert(response);
-		});
-
+/*	#tooltip {   
+		position: absolute;           
+		text-align: center;
+		padding: 20px;             
+		margin: 10px;
+		font: 12px sans-serif;        
+		background: lightsteelblue;   
+		border: 1px;      
+		border-radius: 2px;    
+		z-index: +9;       
+		pointer-events: none; 
+	}*/
+	#statesvg{
+		z-index: +8;
 	}
-</script>
-<head>
-	<title>Data Dashboard</title>
-</head>
+	#tooltip{
+/*		background:rgba(0,0,0,0.9);
+		border:1px solid grey;
+		border-radius:5px;*/
+		background: whitesmoke;
+		border: 1px solid black;
+		font-size:20px;
+		width: 98%;
+		padding: 4px;
+		color: black;
+	}
+	#tooltip h4{
+		margin:0;
+		font-size:24px;
+	}
+	#tooltip table{
+		table-layout:fixed;
+	}
+	#tooltip tr td{
+		padding:0;
+		margin:0;
+	}
+	#tooltip tr td:nth-child(1){
+		width:50px;
+	}
+	#tooltip tr td:nth-child(2){
+		text-align:center;
+	}
+	.bottomBar{
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+		margin-bottom: -2%;
+		height: 1.5%;
+		z-index: +10;
+	}
+	.bottomBar img{
+		height: 100%;
+		width: 100%;
+		border-top: solid;
+		border-color: black;
+		border-width: 1px;
+	}
+</style>
+<script src="uStates.js"></script> 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="rdt.js"></script>
 <body>
-	<h1>CMS Data Dashboard</h1>
-	<p>The number of clicks is: <span id='cnt'>0</span></p>
-	<p><span></span></p>
- 	<button type="button" onclick="buttonFunction()">Click!</button>
 
-<!-- 	<form method="POST" action="/users/add">
-		<label>First Name</label><br>
-		<input type="text" name="first_name">
-		<br>
-		<label>Last Name</label><br>
-		<input type="text" name="last_name">
-		<br>
-		<label>Email</label><br>
-		<input type="text" name="email">
-		<br><br>
-		<input type="submit" value="Submit">	
-	</form>
- -->
+<div class="pageContainer">
+
+	<div class="topBar">
+		<img src="CMSlogo.jpg" id="logo" style="width: 20%;"/>
+		<img src="yellowBanner.jpg" id="banner" style="width: 80%;"/>
+		<img src="title.jpg" id="title"/> //TODO: change to "Operational Analytics"
+		<a href="#abc">IRS</a>
+		<a href="#def">BAR</a>
+		<a href="#ghi">ENROLLMENT</a>
+		<a href="#jkl" id="defaultOpen">APPLICATIONS</a>
+	</div>
+
+	<div class="pageBody">
+
+		<div id="dataContainer">
+			<div id="tooltip" style="border: solid; border-width: 1px">State Data</div>
+			<div id="test">test</div>
+		</div>
+		<svg width="960" height="600" id="statesvg" transform="translate(500, 10)"></svg>
+
+		<script>
+
+			//gets passed in state name (full) and data associated with that state name
+			function tooltipHtml(state, data){	
+				var table = "<table><h4>" + state + "</h4>"
+				Object.keys(data).forEach(function(key){
+					if (key !== 'color'){
+					table = table + "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
+					}
+				})
+				table = table + "</table>"
+				//document.getElementById('test').innerHTML = table;
+				return table;
+			}
+			
+			//TODO: replace with logic for button push to send query to ML, to receive response, to parse & save to variable, and to update UI that query has successfully run
+			var sampleData ={};	/* Sample random data. */	
+			["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
+			"ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH", 
+			"MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT", 
+			"CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN", 
+			"WI", "MO", "AR", "OK", "KS", "LS", "VA"]
+				.forEach(function(d){ 
+					var low=Math.round(100*Math.random()), 
+						mid=Math.round(100*Math.random()), 
+						high=Math.round(100*Math.random());
+					sampleData[d]={Low:d3.min([low,mid,high]), High:d3.max([low,mid,high]), 
+							Avg:Math.round((low+mid+high)/3), Color:d3.interpolate("#ffffcc", "#800026")(low/100), New:1}; 
+				});
+			
+			/* draw states on id #statesvg */	
+			uStates.draw("#statesvg", sampleData, tooltipHtml);
+			
+			//d3.select("#statesvg").style("height", "600px", "top", "40%"); 
+			d3.select("#statesvg"); 
+		</script>
+
+	<div class="bottomBar">
+		<img src="yellowBanner.jpg"/>
+	</div>
+
+</div>
+
+<!-- 	<img src="CMSlogo.jpg" id="logo" style=""></img>
+	<img src="yellowBanner.jpg" id="topBanner" style=""></img>
+	<img src="yellowBanner.jpg" id="bottomBanner" style=""></img>
+	<img src="title.jpg" id="title" style=""></img> -->
 </body>
-</html>

@@ -4,7 +4,7 @@ var xqueries = require('./xqueries.js');
 
 var query = 'xquery=' + xqueries.stateQuery;
 
-function submitRequest(queryName, bodyXML) {
+function submitRequest(queryName, query) {
 
 	digestRequest.requestAsync({
 	  host: 'http://localhost',
@@ -12,18 +12,18 @@ function submitRequest(queryName, bodyXML) {
 	  port: 8011,
 	  method: 'POST',
 	  json: false,
-	  body: bodyXML,
+	  body: query,
 	  headers: {
 	        'Accept': 'multipart/mixed',
 	        'Content-Type': 'application/x-www-form-urlencoded'
 	  }
 	})
 	.then(function (response) {
-		console.log("Response Below:");
+		console.log("Response Received");
 		parseResponse(queryName, response);
 	})
 	.catch(function (error) {
-	  console.log('error');
+	  console.log('Error');
 	  console.log(error);
 	});
 }
