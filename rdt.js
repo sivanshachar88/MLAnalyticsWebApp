@@ -35,6 +35,7 @@ function parseResponse(queryName, res){
 	else if (queryName == "hello") {
 		console.log("hello");
 		console.log(res.body);
+    // document.getElementById('test').innerHTML = "hello";
 	}
 	else {
 		console.log("damn!");

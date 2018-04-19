@@ -93,26 +93,10 @@
 		border-width: 2px;
 		border-color: black;
 	}
-
-/*	#tooltip {   
-		position: absolute;           
-		text-align: center;
-		padding: 20px;             
-		margin: 10px;
-		font: 12px sans-serif;        
-		background: lightsteelblue;   
-		border: 1px;      
-		border-radius: 2px;    
-		z-index: +9;       
-		pointer-events: none; 
-	}*/
 	#statesvg{
 		z-index: +8;
 	}
 	#tooltip{
-/*		background:rgba(0,0,0,0.9);
-		border:1px solid grey;
-		border-radius:5px;*/
 		background: whitesmoke;
 		border: 1px solid black;
 		font-size:20px;
@@ -173,23 +157,22 @@
 	<div class="pageBody">
 
 		<div id="dataContainer">
-			<div id="tooltip" style="border: solid; border-width: 1px">State Data</div>
+			<div id="tooltip" style="border: solid; border-width: 1px; font-size: 16px">Hover over a state to learn more</div>
 			<div id="test">test</div>
+			<button type="button" onclick="submitRequest('hello', query);">statequery</button>
 		</div>
 		<svg width="960" height="600" id="statesvg" transform="translate(500, 10)"></svg>
 
 		<script>
 
-			//gets passed in state name (full) and data associated with that state name
 			function tooltipHtml(state, data){	
 				var table = "<table><h4>" + state + "</h4>"
 				Object.keys(data).forEach(function(key){
-					if (key !== 'color'){
-					table = table + "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
+					if (key !== 'Color'){
+					table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
 					}
 				})
-				table = table + "</table>"
-				//document.getElementById('test').innerHTML = table;
+				table += "</table>"
 				return table;
 			}
 			
@@ -204,14 +187,19 @@
 					var low=Math.round(100*Math.random()), 
 						mid=Math.round(100*Math.random()), 
 						high=Math.round(100*Math.random());
-					sampleData[d]={Low:d3.min([low,mid,high]), High:d3.max([low,mid,high]), 
-							Avg:Math.round((low+mid+high)/3), Color:d3.interpolate("#ffffcc", "#800026")(low/100), New:1}; 
+					sampleData[d]={
+						Low:d3.min([low,mid,high]), 
+						'High Value':d3.max([low,mid,high]), 
+						Avg:Math.round((low+mid+high)/3), 
+						Color:d3.interpolate("#ffffcc", "#800026")(low/100),
+						PercentageBARed: 70,
+						New:1
+					}; 
 				});
+			var thresholds = {low: 10, med: 50, high: 90};
 			
-			/* draw states on id #statesvg */	
-			uStates.draw("#statesvg", sampleData, tooltipHtml);
+			uStates.draw("#statesvg", sampleData, tooltipHtml, "PercentageBARed", thresholds);
 			
-			//d3.select("#statesvg").style("height", "600px", "top", "40%"); 
 			d3.select("#statesvg"); 
 		</script>
 
@@ -221,8 +209,4 @@
 
 </div>
 
-<!-- 	<img src="CMSlogo.jpg" id="logo" style=""></img>
-	<img src="yellowBanner.jpg" id="topBanner" style=""></img>
-	<img src="yellowBanner.jpg" id="bottomBanner" style=""></img>
-	<img src="title.jpg" id="title" style=""></img> -->
 </body>

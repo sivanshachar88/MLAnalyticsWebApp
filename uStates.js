@@ -54,7 +54,7 @@
 	];
 	var uStates={};
 		
-	uStates.draw = function(id, data, toolTip){		
+	uStates.draw = function(id, data, toolTip, colorField, colorThresholds){		
 		function mouseOver(d){
 			d3.select("#tooltip").transition().duration(200).style("opacity", 1);      
 			
@@ -69,7 +69,20 @@
 		
 		d3.select(id).selectAll(".state")
 			.data(uStatePaths).enter().append("path").attr("class","state").attr("d",function(d){ return d.d;})
-			.style("fill",function(d){ return data[d.id].Color; })
+			.style("fill",function(d){ 
+
+				if (data[d.id][colorField] <= colorThresholds.low){
+					return "#FF0000"; //red
+				}
+				else if (data[d.id][colorField] <= colorThresholds.med){
+					return "#FFFF00"; //yellow
+				}
+				else if (data[d.id][colorField] <= colorThresholds.high){
+					return "#28B463"; //green
+				}
+				else return "#FFFFFF";
+				// return data[d.id].Color; 
+			})
 			.on("mouseover", mouseOver).on("mouseout", mouseOut);
 	}
 	this.uStates=uStates;

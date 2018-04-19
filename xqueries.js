@@ -63,6 +63,6 @@ let $states := (
 
 for $state in $states
   let $uri := fn:concat("/", $state, "/gov/ffe/InsuranceApplication/")
-  return fn:concat($state, ":", fn:count(xdmp:directory($uri, "1")))`
+  return fn:concat("State-", $state, ":", fn:count(xdmp:directory($uri, "1")))`
 
 }
