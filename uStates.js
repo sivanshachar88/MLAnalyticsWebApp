@@ -80,8 +80,7 @@
 				else if (data[d.id][colorField] <= colorThresholds.high){
 					return "#28B463"; //green
 				}
-				else return "#FFFFFF";
-				// return data[d.id].Color; 
+				else return "#000000";
 			})
 			.on("mouseover", mouseOver).on("mouseout", mouseOut);
 	}

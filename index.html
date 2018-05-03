@@ -1,212 +1,236 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-	.state{
-		fill: none;
-		stroke: #a9a9a9;
-		stroke-width: 1;
-	}
-	.state:hover{
-		fill-opacity:0.5;
-	}
-	.pageContainer{
-		min-height: 100%;
-		min-width: 100%;
-		width: 100%;
-		position: relative;
-	}
-	.topBar{
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		height: 9%;
-		width: 100%;
-		z-index: +10;
-		}
-	.topBar #logo{
-		position: absolute;
-		display: block;
-		left: 0;
-		width: 20%;
-		height: 100%;
-   		border-bottom: solid;
-		border-color: black;
-		border-width: 1.5px;			
-	}
-	.topBar #banner{
-		position: absolute;
-		display: block;
-		right: 0;
-		width: 80%;
-		height: 100%;
-   		border-bottom: solid;
-		border-color: black;
-		border-width: 1.5px;			
-	}
-	.topBar #title{
-		position: absolute;
-		bottom: 0;
-		left: 21%;
-		height: 80%;
-		border-bottom: none;
-	}
-	.topBar a{
-		position: relative;
-		top: 0;
-		right: 0;
-		margin-top: 1%;
-		display:block;
-		float: right;
-		width: 7%;	
-		text-align: center;
-		padding: 1%;
-		background-color: #FFD004;
-		border: solid;
-		border-color: black;
-		border-width: 1px;
-	}
-	.topBar a:hover{
-		background-color: #FFD00A;
-	}
-	.topBar a:active{
-		background-color: #E67E22;
-		color: purple;
-	}
-	.topBar #defaultOpen{
-		background-color: #E67E22;
-	}
-	.pageBody{
-		position: relative;
-		height: 89.5%;
-		width: 100%;
-		margin-top: 5%;
-		margin-bottom: 0%;
-		/*border: solid black 1px;*/
-	}
-	.pageBody #dataContainer{
-		position: absolute;
-		margin-top: 1%;
-		width: 30%;
-		height: 95%;
-		border: solid;
-		border-width: 2px;
-		border-color: black;
-	}
-	#statesvg{
-		z-index: +8;
-	}
-	#tooltip{
-		background: whitesmoke;
-		border: 1px solid black;
-		font-size:20px;
-		width: 98%;
-		padding: 4px;
-		color: black;
-	}
-	#tooltip h4{
-		margin:0;
-		font-size:24px;
-	}
-	#tooltip table{
-		table-layout:fixed;
-	}
-	#tooltip tr td{
-		padding:0;
-		margin:0;
-	}
-	#tooltip tr td:nth-child(1){
-		width:50px;
-	}
-	#tooltip tr td:nth-child(2){
-		text-align:center;
-	}
-	.bottomBar{
-		position: absolute;
-		width: 100%;
-		bottom: 0;
-		margin-bottom: -2%;
-		height: 1.5%;
-		z-index: +10;
-	}
-	.bottomBar img{
-		height: 100%;
-		width: 100%;
-		border-top: solid;
-		border-color: black;
-		border-width: 1px;
-	}
+.state{
+	fill: none;
+	stroke: #a9a9a9;
+	stroke-width: 1;
+}
+.state:hover{
+	fill-opacity:0.5;
+}
+.pageContainer{
+	min-height: 100%;
+	min-width: 100%;
+	width: 100%;
+	position: relative;
+}
+.topBar{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 9%;
+	width: 100%;
+	z-index: +10;
+}
+.topBar #logo{
+	position: absolute;
+	display: block;
+	left: 0;
+	width: 20%;
+	height: 100%;
+	border-bottom: solid;
+	border-color: black;
+	border-width: 1.5px;			
+}
+.topBar #banner{
+	position: absolute;
+	display: block;
+	right: 0;
+	width: 80%;
+	height: 100%;
+	border-bottom: solid;
+	border-color: black;
+	border-width: 1.5px;			
+}
+.topBar #title{
+	position: absolute;
+	bottom: 0;
+	left: 21%;
+	height: 80%;
+	border-bottom: none;
+}
+.topBar a{
+	position: relative;
+	top: 0;
+	right: 0;
+	margin-top: 2%;
+	display:block;
+	float: right;
+	width: 7%;	
+	text-align: center;
+	padding: .5%;
+	background-color: #FFD004;
+	border: solid;
+	border-color: black;
+	border-width: 1px;
+}
+.topBar a:hover{
+	background-color: #FFD00A;
+}
+.topBar a:active{
+	background-color: #E67E22;
+	color: purple;
+}
+.topBar #defaultOpen{
+	background-color: #E67E22;
+}
+.pageBody{
+	position: relative;
+	height: 89.5%;
+	width: 100%;
+	margin-top: 5%;
+	margin-bottom: 0%;
+	/*border: solid black 1px;*/
+}
+.pageBody #dataContainer{
+	position: absolute;
+	margin-top: 1%;
+	width: 30%;
+	height: 95%;
+	border: solid;
+	border-width: 2px;
+	border-color: black;
+}
+#statesvg{
+	z-index: +8;
+}
+#tooltip{
+	background: whitesmoke;
+	border: 1px solid black;
+	font-size:20px;
+	width: 98%;
+	padding: 4px;
+	color: black;
+}
+#tooltip h4{
+	margin:0;
+	font-size:24px;
+}
+#tooltip table{
+	table-layout:fixed;
+}
+#tooltip tr td{
+	padding:0;
+	margin:0;
+}
+#tooltip tr td:nth-child(1){
+	width:50px;
+}
+#tooltip tr td:nth-child(2){
+	text-align:center;
+}
+.bottomBar{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	margin-bottom: -2%;
+	height: 1.5%;
+	z-index: +10;
+}
+.bottomBar img{
+	height: 100%;
+	width: 100%;
+	border-top: solid;
+	border-color: black;
+	border-width: 1px;
+}
 </style>
-<script src="uStates.js"></script> 
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="rdt.js"></script>
+<script type="text/javascript" src="uStates.js"></script> 
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<!-- <script type="text/javascript" src="data_map.js"></script>-->
+<script type="text/javascript" src="data_map_bundle.js"></script>
+<script type="text/javascript" src="xqueries.js"></script>
+<script>
+	function tooltipHtml(state, data){	
+		var table = "<table><h4>" + state + "</h4>"
+		Object.keys(data).forEach(function(key){
+			if (key !== 'Color'){
+				table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
+			}
+		})
+		table += "</table>"
+		return table;
+	}
+
+	function testAlertHere(){
+		alert("hello");
+		// var data = captureSampleData();
+		var data = some;
+		alert(data);
+		document.getElementById("test").innerHTML = data;
+		var thresholds = captureThresholds();
+		document.getElementById("test").innerHTML = data;		
+		d3.select("#statesvg").remove();				
+		uStates.draw("#statesvg", data, tooltipHtml, "PercentageBARed", thresholds);
+
+		d3.select("#statesvg"); 
+	}
+</script>
+
 <body>
 
-<div class="pageContainer">
+	<div class="pageContainer">
 
-	<div class="topBar">
-		<img src="CMSlogo.jpg" id="logo" style="width: 20%;"/>
-		<img src="yellowBanner.jpg" id="banner" style="width: 80%;"/>
-		<img src="title.jpg" id="title"/> //TODO: change to "Operational Analytics"
-		<a href="#abc">IRS</a>
-		<a href="#def">BAR</a>
-		<a href="#ghi">ENROLLMENT</a>
-		<a href="#jkl" id="defaultOpen">APPLICATIONS</a>
-	</div>
-
-	<div class="pageBody">
-
-		<div id="dataContainer">
-			<div id="tooltip" style="border: solid; border-width: 1px; font-size: 16px">Hover over a state to learn more</div>
-			<div id="test">test</div>
-			<button type="button" onclick="submitRequest('hello', query);">statequery</button>
+		<div class="topBar">
+			<img src="Logo.jpg" id="logo" style="width: 20%;"/>
+			<img src="yellowBanner.jpg" id="banner" style="width: 80%;"/>
+			<img src="title.jpg" id="title"/> <!--TODO: change to "Operational Analytics or Operations"-->
+			<a href="#abc">IRS</a>
+			<a href="#def">BAR</a>
+			<a href="#ghi">ENROLLMENT</a>
+			<a href="#jkl" id="defaultOpen">APPLICATIONS</a>
 		</div>
-		<svg width="960" height="600" id="statesvg" transform="translate(500, 10)"></svg>
 
-		<script>
+		<div class="pageBody">
 
-			function tooltipHtml(state, data){	
-				var table = "<table><h4>" + state + "</h4>"
-				Object.keys(data).forEach(function(key){
-					if (key !== 'Color'){
-					table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
-					}
-				})
-				table += "</table>"
-				return table;
+			<div id="dataContainer">
+				<div id="tooltip" style="border: solid; border-width: 1px; font-size: 16px">Run a query below and hover over a state to learn more</div>
+				<div id="test">testdiv</div>
+				<button name="query1" onclick="runQuery('stateQuery');">Applications by State</button>
+			</div>
+			<svg width="960" height="600" id="statesvg" transform="translate(500, 10)"></svg>
+
+			<script>
+
+			//TODO: replace with logic for button push to send query to ML, to receive response, to parse & save to variable, and to update UI that query has successfully run
+			// var sampleData ={};	/* Sample random data. */	
+			// ["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
+			// "ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH", 
+			// "MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT", 
+			// "CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN", 
+			// "WI", "MO", "AR", "OK", "KS", "LS", "VA"]
+			// .forEach(function(d){ 
+			// 	var low=Math.round(100*Math.random()), 
+			// 	mid=Math.round(100*Math.random()), 
+			// 	high=Math.round(100*Math.random());
+			// 	sampleData[d]={
+			// 		Low:d3.min([low,mid,high]), 
+			// 		'High Value':d3.max([low,mid,high]), 
+			// 		Avg:Math.round((low+mid+high)/3), 
+			// 		Color:d3.interpolate("#ffffcc", "#800026")(low/100),
+			// 		PercentageBARed: 70,
+			// 		New:1
+			// 	}; 
+			// });
+
+			// var thresholds = {low: 10, med: 50, high: 90};
+
+
+			window.onload = function(){
+				// uStates.draw("#statesvg", {}, tooltipHtml, "PercentageBARed", {});
+
+				// d3.select("#statesvg"); 
+
 			}
 			
-			//TODO: replace with logic for button push to send query to ML, to receive response, to parse & save to variable, and to update UI that query has successfully run
-			var sampleData ={};	/* Sample random data. */	
-			["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
-			"ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH", 
-			"MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT", 
-			"CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN", 
-			"WI", "MO", "AR", "OK", "KS", "LS", "VA"]
-				.forEach(function(d){ 
-					var low=Math.round(100*Math.random()), 
-						mid=Math.round(100*Math.random()), 
-						high=Math.round(100*Math.random());
-					sampleData[d]={
-						Low:d3.min([low,mid,high]), 
-						'High Value':d3.max([low,mid,high]), 
-						Avg:Math.round((low+mid+high)/3), 
-						Color:d3.interpolate("#ffffcc", "#800026")(low/100),
-						PercentageBARed: 70,
-						New:1
-					}; 
-				});
-			var thresholds = {low: 10, med: 50, high: 90};
-			
-			uStates.draw("#statesvg", sampleData, tooltipHtml, "PercentageBARed", thresholds);
-			
-			d3.select("#statesvg"); 
 		</script>
 
-	<div class="bottomBar">
-		<img src="yellowBanner.jpg"/>
-	</div>
+		<div class="bottomBar">
+			<img src="yellowBanner.jpg"/>
+		</div>
 
-</div>
+	</div>
 
 </body>
