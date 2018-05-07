@@ -137,36 +137,26 @@
 	border-width: 1px;
 }
 </style>
-<script type="text/javascript" src="uStates.js"></script> 
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript" src="uStates.js"></script> 
 <!-- <script type="text/javascript" src="data_map.js"></script>-->
 <script type="text/javascript" src="data_map_bundle.js"></script>
 <script type="text/javascript" src="xqueries.js"></script>
 <script>
-	function tooltipHtml(state, data){	
-		var table = "<table><h4>" + state + "</h4>"
-		Object.keys(data).forEach(function(key){
-			if (key !== 'Color'){
-				table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
-			}
-		})
-		table += "</table>"
-		return table;
-	}
 
-	function testAlertHere(){
-		alert("hello");
-		// var data = captureSampleData();
-		var data = some;
-		alert(data);
-		document.getElementById("test").innerHTML = data;
-		var thresholds = captureThresholds();
-		document.getElementById("test").innerHTML = data;		
-		d3.select("#statesvg").remove();				
-		uStates.draw("#statesvg", data, tooltipHtml, "PercentageBARed", thresholds);
+	// function testAlertHere(){
+	// 	alert("hello");
+	// 	// var data = captureSampleData();
+	// 	var data = some;
+	// 	alert(data);
+	// 	document.getElementById("test").innerHTML = data;
+	// 	var thresholds = captureThresholds();
+	// 	document.getElementById("test").innerHTML = data;		
+	// 	d3.select("#statesvg").remove();				
+	// 	uStates.draw("#statesvg", data, tooltipHtml, "PercentageBARed", thresholds);
 
-		d3.select("#statesvg"); 
-	}
+	// 	d3.select("#statesvg"); 
+	// }
 </script>
 
 <body>
@@ -217,7 +207,16 @@
 
 			// var thresholds = {low: 10, med: 50, high: 90};
 
-
+			// function tooltipHtml(state, data){	
+			// 	var table = "<table><h4>" + state + "</h4>"
+			// 	Object.keys(data).forEach(function(key){
+			// 		if (key !== 'Color'){
+			// 			table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
+			// 		}
+			// 	})
+			// 	table += "</table>"
+			// 	return table;
+			// }
 			window.onload = function(){
 				// uStates.draw("#statesvg", {}, tooltipHtml, "PercentageBARed", {});
 

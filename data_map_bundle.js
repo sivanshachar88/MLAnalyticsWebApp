@@ -24600,7 +24600,6 @@ var request = require('auth-request');
 // var thresholds = {low: 10, med: 50, high: 90};
 
 
-
 window.runQuery = function(queryName){
 
   var queryData = getQueryData(queryName); 
@@ -24627,6 +24626,7 @@ window.runQuery = function(queryName){
     else{
       alert(res.data);
       var data = parseResponse(res.data);
+      //document.getElementById("test").innerHTML += tooltipHtml("AL", data["AL"]);
       redrawMap(data, queryData.thresholdFocus, queryData.thresholds);
     }
   });
@@ -24634,21 +24634,20 @@ window.runQuery = function(queryName){
 
 function parseResponse(response){
 
-  var parsedData = {};
+  var parsedData = {}; // {StateAbrv: {data key:value, ...}, ...}
 
 
   var regex = /State:\.*[^\-]+/g; //from "State:" to "-", g=global (all matches) 
   var regexResult;
   while (regexResult = regex.exec(response)){
 
-    regexResult[0] = regexResult[0].trim();
-    var splitMetrics = regexResult[0].split(","); //[0] is full regex match, [>0] are submatches
+    regexResult[0] = regexResult[0].trim(); //[0] is full regex match, [>0] are submatches
+    var splitMetrics = regexResult[0].split(","); 
 
     //extract state abbreviation and metrics
     var stateAbrv;
     var stateData = {};
     for (var item of splitMetrics){
-
       var metric = item.split(":");
       if (metric[0] == "State"){
         stateAbrv = metric[1];
@@ -24657,30 +24656,27 @@ function parseResponse(response){
         stateData[metric[0]] = metric[1];
       }
     }
+
     parsedData[stateAbrv] = stateData;
   }
 
-  alert(JSON.stringify(parsedData));
   return parsedData;
 }
 
 
-//take in dictionary of data by state, the key threshold identifier and thresholds
-//redraw us map with new data
-//no return
 function redrawMap(data, thresholdFocus, thresholds){
   uStates.draw("#statesvg", data, tooltipHtml, thresholdFocus, thresholds);
 
   d3.select("#statesvg"); 
 }
 
+
 function tooltipHtml(state, data){  
   var table = "<table><h4>" + state + "</h4>"
-  Object.keys(data).forEach(function(key){
-    if (key !== 'Color'){
-      table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
-    }
-  })
+  // Object.keys(data).forEach(function(key){
+  for (var key in data){
+    table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
+  }
   table += "</table>"
   return table;
 }

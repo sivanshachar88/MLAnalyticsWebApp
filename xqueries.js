@@ -13,7 +13,7 @@ function getQueryData(queryName){
 
 		map.query = stateQuery;
 		map.thresholdFocus = "Application Count";
-		map.thresholds = {low:10, med:50, high:10000};
+		map.thresholds = {low:10, med:15, high:10000};
 		return map;
 
 	}
@@ -41,6 +41,7 @@ let $states := (
 "CA",
 "CO",
 "CT",
+"DC",
 "DE",
 "FL",
 "GA",
