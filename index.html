@@ -109,17 +109,17 @@
 	font-size:24px;
 }
 #tooltip table{
-	table-layout:fixed;
+	table-layout:auto;
 }
 #tooltip tr td{
-	padding:0;
+	padding-right:10px;
 	margin:0;
 }
 #tooltip tr td:nth-child(1){
-	width:50px;
+	text-align:left;
 }
 #tooltip tr td:nth-child(2){
-	text-align:center;
+	text-align:left;
 }
 .bottomBar{
 	position: absolute;
@@ -176,9 +176,12 @@
 		<div class="pageBody">
 
 			<div id="dataContainer">
-				<div id="tooltip" style="border: solid; border-width: 1px; font-size: 16px">Run a query below and hover over a state to learn more</div>
+				<div id="tooltip" style="border: solid; border-width: 1px; font-size: 16px">
+					Run a query below and hover over a state to learn more
+				</div>
 				<div id="test">testdiv</div>
-				<button name="query1" onclick="runQuery('stateQuery');">Applications by State</button>
+				<button name="query1" onclick="runQuery('appCountQuery');">Applications by State</button>
+				<button name="query1" onclick="runQuery('secondQuery');">Another Query</button>
 			</div>
 			<svg width="960" height="600" id="statesvg" transform="translate(500, 10)"></svg>
 
@@ -218,12 +221,11 @@
 			// 	return table;
 			// }
 			window.onload = function(){
-				// uStates.draw("#statesvg", {}, tooltipHtml, "PercentageBARed", {});
+				uStates.draw("#statesvg", {}, null, null, {});
 
 				// d3.select("#statesvg"); 
-
 			}
-			
+
 		</script>
 
 		<div class="bottomBar">

@@ -51,8 +51,8 @@ window.runQuery = function(queryName){
     else{
       alert(res.data);
       var data = parseResponse(res.data);
-      //document.getElementById("test").innerHTML += tooltipHtml("AL", data["AL"]);
-      redrawMap(data, queryData.thresholdFocus, queryData.thresholds);
+      alert(JSON.stringify(data));
+      fillMap(data, queryData.thresholdFocus, queryData.thresholds);
     }
   });
 }
@@ -62,7 +62,7 @@ function parseResponse(response){
   var parsedData = {}; // {StateAbrv: {data key:value, ...}, ...}
 
 
-  var regex = /State:\.*[^\-]+/g; //from "State:" to "-", g=global (all matches) 
+  var regex = /state:\.*[^\-]+/g; //from "State:" to "-", g=global (all matches) 
   var regexResult;
   while (regexResult = regex.exec(response)){
 
@@ -74,7 +74,7 @@ function parseResponse(response){
     var stateData = {};
     for (var item of splitMetrics){
       var metric = item.split(":");
-      if (metric[0] == "State"){
+      if (metric[0] == "state"){
         stateAbrv = metric[1];
       }
       else{
@@ -89,22 +89,23 @@ function parseResponse(response){
 }
 
 
-function redrawMap(data, thresholdFocus, thresholds){
-  uStates.draw("#statesvg", data, tooltipHtml, thresholdFocus, thresholds);
+function fillMap(data, thresholdFocus, thresholds){
 
-  d3.select("#statesvg"); 
+  uStates.draw("#statesvg", data, thresholdFocus, thresholds);
+
+  // d3.select("#statesvg"); 
 }
 
 
-function tooltipHtml(state, data){  
-  var table = "<table><h4>" + state + "</h4>"
-  // Object.keys(data).forEach(function(key){
-  for (var key in data){
-    table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
-  }
-  table += "</table>"
-  return table;
-}
+// function tooltipHtml(state, data){  
+//   var table = "<table><h4>" + state + "</h4>"
+//   // Object.keys(data).forEach(function(key){
+//   for (var key in data){
+//     table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
+//   }
+//   table += "</table>"
+//   return table;
+// }
 
 // window.runQuery1 = function(){
 //   var abc = "text";
