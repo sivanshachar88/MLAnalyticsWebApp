@@ -1,0 +1,139 @@
+.state{
+	fill: none;
+	stroke: #a9a9a9;
+	stroke-width: 1;
+}
+.state:hover{
+	fill-opacity:0.5;
+}
+.pageContainer{
+	min-height: 100%;
+	min-width: 100%;
+	width: 100%;
+	position: relative;
+}
+.topBar{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 9%;
+	width: 100%;
+	z-index: +10;
+}
+.topBar #logo{
+	position: absolute;
+	display: block;
+	left: 0;
+	width: 20%;
+	height: 100%;
+	border-bottom: solid;
+	border-color: black;
+	border-width: 1.5px;			
+}
+.topBar #banner{
+	position: absolute;
+	display: block;
+	right: 0;
+	width: 80%;
+	height: 100%;
+	border-bottom: solid;
+	border-color: black;
+	border-width: 1.5px;			
+}
+.topBar #title{
+	position: absolute;
+	bottom: 0;
+	left: 21%;
+	height: 80%;
+	border-bottom: none;
+}
+.topBar a{
+	position: relative;
+	top: 0;
+	right: 0;
+	margin-top: 2%;
+	display:block;
+	float: right;
+	width: 7%;	
+	text-align: center;
+	padding: .5%;
+	background-color: #FFD004;
+	border: solid;
+	border-color: black;
+	border-width: 1px;
+}
+.topBar a:hover{
+	background-color: #FFD00A;
+}
+.topBar a:active{
+	background-color: #E67E22;
+	color: purple;
+}
+.topBar #defaultOpen{
+	background-color: #E67E22;
+}
+.pageBody{
+	position: relative;
+	height: 89.5%;
+	width: 100%;
+	margin-top: 5%;
+	margin-bottom: 0%;
+}
+.pageBody #dataContainer{
+	position: absolute;
+	margin-top: 1%;
+	width: 30%;
+	height: 95%;
+	border: solid;
+	border-width: 2px;
+	border-color: black;
+}
+#statesvg{
+	z-index: +8;
+}
+#queryButtonTable{
+	position: fixed;
+	top:30%;
+	border: solid 1px;
+}
+#tooltip{
+	background: whitesmoke;
+	border: 1px solid black;
+	font-size:20px;
+	width: 98%;
+	padding: 4px;
+	color: black;
+}
+#tooltip h4{
+	margin:0;
+	font-size:24px;
+}
+#tooltip table{
+	table-layout:auto;
+}
+#tooltip tr td{
+	padding-right:10px;
+	margin:0;
+}
+#tooltip tr td:nth-child(1){
+	text-align:left;
+}
+#tooltip tr td:nth-child(2){
+	text-align:left;
+}
+.bottomBar{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	margin-bottom: -2%;
+	height: 1.5%;
+	z-index: +10;
+}
+.bottomBar img{
+	height: 100%;
+	width: 100%;
+	border-top: solid;
+	border-color: black;
+	border-width: 1px;
+}

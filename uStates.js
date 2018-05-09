@@ -55,25 +55,25 @@
 	var uStates={};
 
 	uStates.draw = function(id, data, colorField, colorThresholds){	
-
-		// d3.select(id).selectAll(".state").data(uStatePaths)
-
+		//draw state lines
 		d3.select(id).selectAll(".state")
 		.data(uStatePaths).enter().append("path").attr("class","state").attr("d",function(d){ return d.d;})
 		
-
+		//add color
 		d3.select(id).selectAll(".state").data(uStatePaths).style("fill",function(d){ 
 			if (data[d.id][colorField] <= colorThresholds.low){
-					return "#FF0000"; //red
-				}
-				else if (data[d.id][colorField] <= colorThresholds.med){
-					return "#FFFF00"; //yellow
-				}
-				else if (data[d.id][colorField] <= colorThresholds.high){
-					return "#28B463"; //green
-				}
-				else return "WhiteSmoke";
-			})
+				return "#FF0000"; //red
+			}
+			else if (data[d.id][colorField] > colorThresholds.low && data[d.id][colorField] < colorThresholds.high){
+				return "#FFFF00"; //yellow
+			}
+			else if (data[d.id][colorField] >= colorThresholds.high){
+				return "#28B463"; //green
+			}
+			else {
+				return "WhiteSmoke";
+			}
+		})
 		.on("mouseover", mouseOver).on("mouseout", mouseOut);
 
 		function mouseOver(d){
@@ -85,26 +85,9 @@
 		}
 
 		function mouseOut(){
-			//d3.select("#tooltip").transition().duration(500).style("opacity", 0); 
-			d3.select("#tooltip").text("Run a query below and hover over a state to learn more").transition().duration(500);
+			d3.select("#tooltip").text("Run a query below and hover over a state to learn more");
 		}
 	}
-
-	uStates.redraw = function(id, data, colorField, colorThresholds){
-
-	}
-
-	// function mouseOver(d, data){
-	// 	d3.select("#tooltip").transition().duration(200).style("opacity", 1);
-
-	// 	d3.select("#tooltip").html(tooltipHtml(d.n, data[d.id]))
-	// 	.style("left", (d3.event.pageX) + "px")
-	// 	.style("top", (d3.event.pageY - 28) + "px");
-	// }
-
-	// function mouseOut(){
-	// 	d3.select("#tooltip").text("Run a query below and hover over a state to learn more");
-	// }
 
 	function tooltipHtml(state, data){  
 		var table = "<table><h4>" + state + "</h4>"
