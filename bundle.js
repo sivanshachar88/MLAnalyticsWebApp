@@ -24573,38 +24573,16 @@ function extend() {
 }
 
 },{}],167:[function(require,module,exports){
-// var digestRequest = require('request-digest')('admin', 'admin');
 var request = require('auth-request');
 
-//chrome.exe --disable-web-security --user-data-dir
-
-var sampleData ={}; /* Sample random data. */ 
-["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
-"ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH", 
-"MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT", 
-"CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN", 
-"WI", "MO", "AR", "OK", "KS", "LS", "VA"]
-.forEach(function(d){ 
-  var low=Math.round(100*Math.random()), 
-  mid=Math.round(100*Math.random()), 
-  high=Math.round(100*Math.random());
-  sampleData[d]={
-    Low:"12", 
-    'High Value':"14", 
-    Avg:"13", 
-    PercentageBARed: 70,
-    New:1
-  }; 
-});
-
-var thresholds = {low: 10, med: 50, high: 90};
-
-
+//avoid "access-control-allow-origin" errors, run chrome through cmd: <path_to_chrome.exe>/chrome.exe --disable-web-security --user-data-dir
 
 window.runQuery = function(queryName){
 
-  var queryData = getQueryData(queryName);
-  document.getElementById("test").innerHTML = queryData.thresholdFocus;
+  var queryData = getQueryData(queryName); 
+  if (queryData == null){
+    return;
+  }
 
   var options = {
     scheme: 'http',
@@ -24621,69 +24599,48 @@ window.runQuery = function(queryName){
     password: 'admin'
   };
 
-  request(options, function (err, result) {
+  request(options, function (err, res) {
     if (err) {
-      document.getElementById("test").innerHTML += "Got error" + err;
+      document.getElementById("queryNotes").innerHTML = "Query Errored Out:<br/>" + err;
     }
     else{
-      document.getElementById("test").innerHTML += "Got result" + result.data;
+      var data = parseResponse(res.data);
+      fillMap(data, queryData.thresholdFocus, queryData.thresholds);
     }
   });
 }
 
-//go through results, pick out each state keyword, parse data after state into dictionary with state abbrev & json array data
-//return results
-function parseData(results){
+function parseResponse(response){
 
-}
+  var parsedData = {}; // {stateAbrv: {data key:value, ...}, ...}
 
-//take in dictionary of data by state, the key threshold identifier and thresholds
-//redraw us map with new data
-function redrawMap(data, thresholdFocus, thresholds){
+  var regex = /state:\.*[^\-]+/g; //from "state:" to "-", g=global (all matches) 
+  var regexResult;
+  while (regexResult = regex.exec(response)){
+    regexResult[0] = regexResult[0].trim(); 
+    var splitMetrics = regexResult[0].split(","); 
 
-}
-
-function tooltipHtml(state, data){  
-  var table = "<table><h4>" + state + "</h4>"
-  Object.keys(data).forEach(function(key){
-    if (key !== 'Color'){
-      table += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>"
+    //extract state abbreviation and metrics
+    var stateAbrv;
+    var stateData = {};
+    for (var item of splitMetrics){
+      var metric = item.split(":");
+      if (metric[0] == "state"){
+        stateAbrv = metric[1];
+      }
+      else{
+        stateData[metric[0]] = metric[1];
+      }
     }
-  })
-  table += "</table>"
-  return table;
+    parsedData[stateAbrv] = stateData;
+  }
+  return parsedData;
 }
 
-// window.runQuery1 = function(){
-//   var abc = "text";
-//   document.getElementById("test").innerHTML = abc;
-//   alert(stateQuery);
-//   try{
-//     digestRequest.requestAsync({
-//       host: 'http://localhost',
-//       path: '/v1/eval',
-//       port: 8011,
-//       method: 'POST',
-//       json: false,
-//       body: stateQuery,
-//       headers: {  
-//         'Accept': 'multipart/mixed',
-//         'Content-Type': 'application/x-www-form-urlencoded'
-//       }
-//     })
-//     .then(function (response) {
-//       console.log(response.body);
-//       alert("in promise response");
-//       document.getElementById("test").innerHTML = "ASNYC UPDATE SUCCESS";
-//     })
-//     .catch(function (error) {
-//       console.log('Error' + String(error));
-//       alert("in promise error");
-//     }); 
-//   }catch(err){
-//     alert("could not run request");
-//   }
-// }
+
+function fillMap(data, thresholdFocus, thresholds){
+  uStates.draw("#statesvg", data, thresholdFocus, thresholds);
+}
 
 },{"auth-request":168}],168:[function(require,module,exports){
 var Runner = require('./runner');
@@ -24821,7 +24778,7 @@ function format(options, callback) {
 		method: options.method || 'GET',
 		headers: options.headers || {}
 	};
-	// EDITED TO STOP AUTO INSERTING HEADERS
+	//EDITED TO PREVENT SETTING DATA TYPE TO JSON AUTOMATICALLY
 	// if (options.data) {
 	// 	requestOptions.headers['Content-Type'] = 'application/json';
 	// 	requestOptions.headers['Content-Length'] = JSON.stringify(options.data).length;
@@ -24866,6 +24823,7 @@ function makeRequest(options, param, callback) {
 	req.on('error', callback);
 	
 	if (options.data) {
+		//EDITED TO WRITE DATA AS IS INSTEAD OF CONVERTING TO JSON
 		// req.write(JSON.stringify(options.data));
 		req.write(options.data);
 	}
