@@ -29,9 +29,7 @@ var appCountQuery = {
 	`xquery=
 	xquery version "1.0-ml";
 
-	declare namespace p="http://persistence.ffe.cms.hhs.gov";
-	declare namespace base="http://base.persistence.base.cms.hhs.gov";
-	declare namespace pb = "http://persistence.base.cms.hhs.gov";
+	declare namespace p="http://persistence.etc.gov";
 
 	let $_ := xdmp:set-request-time-limit(60)
 
@@ -89,7 +87,7 @@ var appCountQuery = {
 	"WY")
 
 	for $state in $states
-		let $uri := fn:concat("/", $state, "/gov/ffe/InsuranceApplication/")
+		let $uri := fn:concat("/", $state, "/gov/Application/")
 	return fn:concat("state:", $state, ",Application Count:", fn:count(xdmp:directory($uri, "1")), ",Metric2:", "123")`
 }
 
@@ -100,9 +98,7 @@ var secondQuery = {
 	`xquery=
 	xquery version "1.0-ml";
 
-	declare namespace p="http://persistence.ffe.cms.hhs.gov";
-	declare namespace base="http://base.persistence.base.cms.hhs.gov";
-	declare namespace pb = "http://persistence.base.cms.hhs.gov";
+	declare namespace p="http://persistence.etc.gov";
 
 	let $_ := xdmp:set-request-time-limit(60)
 
@@ -160,6 +156,6 @@ var secondQuery = {
 	"WY")
 
 	for $state in $states
-		let $uri := fn:concat("/", $state, "/gov/ffe/InsuranceApplication/")
+		let $uri := fn:concat("/", $state, "/gov/Application/")
 	return fn:concat("state:", $state, ",Second Query:", fn:count(xdmp:directory($uri, "1")), ",New Metric:", "123")`
 }
