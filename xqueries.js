@@ -13,8 +13,8 @@ function getQueryData(queryName){
 	if (queryName == "appCountQuery"){
 		return appCountQuery;
 	}
-	else if (queryName == "secondQuery"){
-		return secondQuery;
+	else if (queryName == "sampleQuery"){
+		return sampleQuery;
 	}
 	else {
 		document.getElementById("queryNotes").innerHTML = "Requested queryName was not found. Check button mapping.";
@@ -91,7 +91,7 @@ var appCountQuery = {
 	return fn:concat("state:", $state, ",Application Count:", fn:count(xdmp:directory($uri, "1")), ",Metric2:", "123")`
 }
 
-var secondQuery = {
+var sampleQuery = {
 	thresholdFocus:"New Metric",
 	thresholds:{low:10, high:90},
 	query:
